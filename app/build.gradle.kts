@@ -1,66 +1,73 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id(Plugins.AGP.application)
+    id(Plugins.Kotlin.kotlin)
+    id(Plugins.Kotlin.kotlinKapt)
+    id(Plugins.hilt)
 }
 
 android {
-    namespace 'com.example.note_g_11'
-    compileSdk 33
+    namespace = "com.example.note_g_11"
+    compileSdk = AppConfig.compileSdk
 
     defaultConfig {
-        applicationId "com.example.note_g_11"
-        minSdk 24
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        applicationId = "com.example.note_g_11"
+        minSdk = AppConfig.minSdk
+        targetSdk = AppConfig.targetSdk
+        versionCode = AppConfig.versionCode
+        versionName = AppConfig.versionName
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary true
-        }
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = "1.8"
     }
+
     buildFeatures {
-        compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion '1.3.2'
-    }
-    packagingOptions {
-        resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
-        }
+        viewBinding = true
     }
 }
 
 dependencies {
+    implementation(project(":data"))
+    implementation(project(":domain"))
 
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-    implementation 'androidx.activity:activity-compose:1.5.1'
-    implementation platform('androidx.compose:compose-bom:2022.10.00')
-    implementation 'androidx.compose.ui:ui'
-    implementation 'androidx.compose.ui:ui-graphics'
-    implementation 'androidx.compose.ui:ui-tooling-preview'
-    implementation 'androidx.compose.material3:material3'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    androidTestImplementation platform('androidx.compose:compose-bom:2022.10.00')
-    androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
-    debugImplementation 'androidx.compose.ui:ui-tooling'
-    debugImplementation 'androidx.compose.ui:ui-test-manifest'
+    implementation(Dependencies.Ui.core)
+    implementation(Dependencies.Ui.appcompat)
+    implementation(Dependencies.Ui.material)
+    implementation(Dependencies.Ui.constraint)
+    implementation(Dependencies.Ui.legacy)
+    implementation(Dependencies.Ui.lifecycleLivedata)
+    implementation(Dependencies.Ui.lifecycleViewModel)
+
+    //Room
+    implementation(Dependencies.Room.runtime)
+    kapt(Dependencies.Room.compiler)
+
+    //Hilt
+    implementation(Dependencies.Hilt.android)
+    kapt(Dependencies.Hilt.compiler)
+
+    //Coroutine
+    implementation(Dependencies.Coroutine.core)
+
+    //Lifecycle
+    implementation(Dependencies.Lifecycle.runtime)
+    implementation(Dependencies.Lifecycle.fragment)
+
+    //Nav
+    implementation(Dependencies.Nav.fragment)
 }
