@@ -14,3 +14,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Note_Git_12"
 include (":app")
+include(":domain")
